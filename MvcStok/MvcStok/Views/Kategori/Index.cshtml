@@ -1,0 +1,38 @@
+﻿@using MvcStok.Models.Entity
+@model PagedList.IPagedList<TblKategoriler>
+@using PagedList
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>Kategori ID</th>
+        <th>Kategori Adı</th>
+        <th>Sil</th>
+        <th>Güncelle</th>
+    </tr>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    @item.KategoriID
+                </th>
+                <td>
+                    @item.KategoriAd
+                </td>
+                <td><a href="/Kategori/Sil/@item.KategoriID" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Kategori/KategoriGetir/@item.KategoriID" class="btn btn-primary">Güncelle</a></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new { sayfa }))
+
+<a href="/Kategori/YeniKategori/" class="btn btn-success">Yeni Kategori Ekle</a>

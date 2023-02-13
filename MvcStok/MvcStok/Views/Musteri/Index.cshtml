@@ -1,0 +1,49 @@
+﻿@using MvcStok.Models.Entity
+@model List<TblMusteriler>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@using (Html.BeginForm("Index", "Musteri", FormMethod.Get, new { @class = "form-control" }))
+{
+    <p>
+        <b>Aranacak müşteri adı yada soyadı : </b>@Html.TextBox("p")
+        <input type="submit" value="Ara" style="background-color:lightseagreen; color:red; border-radius:10px;" />
+    </p>
+}
+
+
+<table class="table table-bordered" style="margin-top:10px">
+    <tr>
+        <th>Müşteri ID</th>
+        <th>Müşteri Adı</th>
+        <th>Müşteri Soyadı</th>
+    </tr>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    @item.MusteriID
+                </th>
+                <td>
+                    @item.MusteriAd
+                </td>
+                <td>
+                    @item.MusteriSoyad
+                </td>
+
+                <td><a href="/Musteri/Sil/@item.MusteriID" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Musteri/MusteriGetir/@item.MusteriID" class="btn btn-primary">Güncelle</a></td>
+                @*Alert vererek silme kısmı silme işlemi gerçekleştirilirken alert penceresinde emin misiniz diye soruyor*@
+
+                <td>@Html.ActionLink("Sil Butonu", "Sil", new { id = item.MusteriID }, new { @class = "btn btn-warning", onclick = "return confirm('Gerçekten Silmek İstiyor musunuz?')" })</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<a href="/Musteri/YeniMusteri/" class="btn btn-success">Yeni Musteri Ekle</a>
+
+
